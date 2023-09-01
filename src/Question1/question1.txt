@@ -1,0 +1,67 @@
+/*Q1-
+Question 1 :
+Connect with SQL server database engine using SSMS. 
+Create a database with a name School using query and without query. 
+Create a backup file of database and use Drop statement to drop the database. 
+Restore the database from backup file in SQL Server. 
+Restore AdventureWork2019 Db from web source and Apply Filter on Sales Schema in Tables. 
+
+  */
+
+create database school;
+backup database school
+to disk ='C:\BackupFilesfor SQL\mybackup.bak';
+drop database school
+
+
+
+/*Q1----question2
+Write a SQL statement to create a simple table Locations including columns country_id, country_name and region_id. 
+  */
+
+ create table Locations
+ (country_id      int,
+  country_name    varchar(30),
+  region_id       varchar(20));
+
+/*Write a SQL statement to rename the table Locations to Locations_new.  */
+
+  EXEC sp_rename 'Locations','Locations_new';
+
+/*Write a SQL statement to add a column region_name to the table locations.   */
+  alter table Locations_new
+  add region_name varchar(20);
+
+  alter table Locations_new
+  add ID varchar(10);
+
+  alter table Locations_new
+  add state_province varchar(30);
+
+
+  /* Write a SQL statement to add a column ID as the first column of the table locations.*/
+  create table temp
+  (ID     varchar(10),
+  country_id      int,
+  country_name    varchar(10),
+  region_id       varchar(15));
+  drop table Locations_new;
+  EXEC sp_rename 'temp','Locations_new';
+
+
+ /* Write a SQL statement to add a column state_province after region_id to the table locations. */
+
+  create table temp
+  (ID     varchar(10),
+  country_id      int,
+  country_name    varchar(10),
+  region_id       varchar(15),
+  state_province  varchar(20));
+  insert into temp(ID, country_id, country_name, region_id)
+  select (ID,country_id, country_name, region_id)
+  from Locations_new;
+
+  drop table Locations_new;
+  EXEC sp_rename 'temp','Locations_new';
+  alter table Locations_new
+  add region_name varchar(20);
