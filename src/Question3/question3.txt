@@ -1,0 +1,71 @@
+/* Q3: SQL Select Statement Assessment
+1.Create a Salesman table with the following columns and make sure Salesman_id column should be auto increment.
+
+Salesman_id      Name      City        Commission
+
+Note : Salesman_id should start from 5001.
+*/
+
+create table Salesman
+(Salesman_id     int identity(5001,1) primary key,
+ Name        varchar(50) not null,
+ City        varchar(50),
+ Commission   decimal(8,2));
+
+
+
+
+ /* 2. Insert following records in salesman table:
+
+  Salesman_id |Name |City| Commission
+
+   5001 | James Hoog | New York | 0.15
+   5002 | Nail Knite | Paris    |  0.13
+   5005 | Pit Alex   | London   | 0.11
+   5006 | Mc Lyon    | Paris    | 0.14
+   5007 | Paul Adam  | Paris    | 0.13
+   5003 | Lauson Hen | San Jose | 0.12
+*/
+
+insert into Salesman values
+('James Hoog', 'New York', 0.15),
+('Nail Knite', 'Paris', 0.13),
+('Pit Alex', 'London', 0.11),
+('Mc Lyon', 'Paris', 0.14),
+( 'Paul Adam', 'Paris', 0.13),
+('Lauson Hen', 'San Jose', 0.12);
+
+/* To see the inserted values*/
+select * from Salesman;
+
+
+/*3. Write an SQL query to display all the information from the Salesman table. */
+select * from Salesman;
+
+
+/*4. Write an SQL query to display distinct city from the Salesman table. */
+select  distinct City from Salesman;
+
+
+/*5. Write an SQL query to display all distinct rows from the Salesman table. */
+select distinct * from Salesman;
+
+
+/*6. Write an SQL query to display distinct name and city from Salesman table. */
+select distinct Name, City from Salesman;
+
+
+/*7. Write an SQL query to display all records but city should be "Paris" */
+select * from Salesman where City ='Paris';
+
+
+/*8. Write an SQL query to display all records but city should be "Paris" and commission should be greater than 0.14 */
+select * from Salesman where City = 'Paris'and Commission >0.14;
+
+
+/*9. Write an SQL query to display all records from Salesman table but commission column should be ascending order */
+select * from Salesman order by Commission asc;
+
+
+/*10.Write an SQL query to display all records except San Jose city */
+select * from Salesman where City <> 'San Jose';

@@ -1,0 +1,82 @@
+/*Q6 :
+Table 1 : Employee details
+Table 2 : ProjectDetail
+Graphical user interface, table
+Description automatically generated
+
+1.Create 2 tables with the above mentioned records
+2.Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for those employee which have assigned project already.
+3.Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for all employee even they have not assigned project.
+4.Get all project name even they have not matching any employeeid, in left table, order by firstname from "EmployeeDetail" and "ProjectDetail".
+5.Get complete record(employeename, project name) from both tables([EmployeeDetail],[ProjectDetail]), if no match found in any table then show NULL.
+*/
+
+create table EmployeeDetail
+(EmployeeID     int,
+FirstName     varchar(20),
+LastName      varchar(20),
+Salary        money,
+Department    varchar(20),
+Gender        varchar(10));
+
+
+ insert into EmployeeDetail values
+ (1,'Vikas', 'Ahlawat', 600000,'IT','Male'),
+ (2,'nikita','Jain',530000,'HR','Female'),
+ (3,'Ashish','Kumar',1000000,'IT','Male'),
+ (4,'Nikhil','Sharma',480000,'HR','Male'),
+ (5,'anish','kadian',500000,'Payroll','Male');
+
+
+ create table ProjectDetail
+ (ProjectDetailID       int primary key,
+ EmployeeID           int,
+ ProjectName        varchar(255));
+
+ insert into ProjectDetail values
+ (1,1,'Task Track'),
+ (2,1,'CLP'),
+ (3,1,'Survey Management'),
+ (4,2,'HR Management'),
+ (5,3,'Task Track'),
+ (6,3,'GRS'),
+ (7,3,'DDS'),
+ (8,4,'HR Management'),
+ (9,6,'GL Management');
+
+
+select ED.FirstName as EmployeeName, PD.ProjectName
+from EmployeeDetail as ED
+inner join ProjectDetail as PD on ED.EmployeeID = PD.EmployeeID
+order by ED.FirstName;
+
+
+select ED.FirstName as EmployeeName, COALESCE(PD.ProjectName, 'Not Assigned') as ProjectName
+from EmployeeDetail as ED
+left join ProjectDetail as PD on ED.EmployeeID = PD.EmployeeID
+order by ED.FirstName;
+
+
+select ED.FirstName as EmployeeName, COALESCE(PD.ProjectName, 'Not Assigned') as ProjectName
+from EmployeeDetail as ED
+left join ProjectDetail as PD on ED.EmployeeID = PD.EmployeeID
+union all
+select null  as EmployeeName, PD.ProjectName as ProjectName
+from ProjectDetail as PD
+where PD.EmployeeID is null
+order by EmployeeName, ProjectName;
+
+
+
+select ED.FirstName as EmployeeName, COALESCE(PD.ProjectName, 'Not Assigned') as ProjectName
+from EmployeeDetail as ED
+left join ProjectDetail as PD on ED.EmployeeID = PD.EmployeeID
+union
+select null as EmployeeName, PD.ProjectName as ProjectName
+from ProjectDetail as PD
+where PD.EmployeeID is null
+union
+select ED.FirstName as EmployeeName, null as ProjectName
+from EmployeeDetail as ED
+where ED.EmployeeID is null
+order by EmployeeName, ProjectName;

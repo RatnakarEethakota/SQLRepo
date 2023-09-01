@@ -1,0 +1,62 @@
+/* Q4:   Create a table Persons with column names as  
+Personid int primary key, 
+Last Name varchar(23), 
+First Name varchar(23), 
+Age int and insert some data 
+
+Create a table Orders with column names as  
+Order Id int primary key, 
+Order Number int, 
+Person Id int foreign key and Insert some data. 
+*/
+
+create table Persons
+(Personid      int  primary key,
+Last_Name    varchar(23),
+First_Name   varchar(23),
+Age          int );
+
+
+insert into Persons values
+(21, 'Kumar', 'Siva', 23),
+(22, 'Reddy', 'Tarun', 26),
+(23, 'Krishna', 'Rama', 24),
+(24, 'Naga', 'Dhana', 25);
+
+select * from Persons;
+
+create table Orders1
+(Order_id  int primary key,
+Order_number  int,
+Personid int,
+ foreign key (Personid) references Persons(Personid));
+
+insert into Orders1(Order_id, Order_number) values
+(1,1001),
+(2,1002),
+(3,1003);
+select * from Orders1;
+
+
+
+/*Note: 
+Restore database AdventureworksDW2019 
+1.Write SQL query to sort the LastName as ascending order and show that LastName column as first column from DimCustomer table 
+2.Write SQL query to show top 20 Products from DimProduct Table 
+3.Write SQL query to show 50 percentage of customers from DimCustomers table 
+4.Write SQL query to find Minimum and Maximum yearly income from DimCustomer Table. 
+*/
+
+SELECT LastName, *
+FROM DimCustomer
+ORDER BY LastName ASC;
+
+select top 20 *
+from DimProduct;
+
+select top 50 percent *
+from DimCustomer;
+
+
+SELECT MIN(YearlyIncome) AS MinYearlyIncome, MAX(YearlyIncome) AS MaxYearlyIncome
+FROM DimCustomer;
