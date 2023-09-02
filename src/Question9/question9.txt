@@ -1,0 +1,76 @@
+/* Q9. Create a table ProjectDetails */
+
+/*1.Create projectDetails table with above mentioned data */
+ create table ProjectDetails
+ (ProjectdetailID   int,
+ EmployeeDetailID    int,
+ ProjectName      varchar(40));
+
+ insert into ProjectDetails values
+ (1,1,'Task Track'),
+ (2,1,'CLP'),
+ (3,1,'Survey Management'),
+ (4,2,'HR Management'),
+ (5,3,'Task Track'),
+ (6,3,'GRS'),
+ (7,3,'DDS'),
+ (8,4,'HR Management'),
+ (9,6,'GL Management');
+
+/*2.Write the query to get the department and department wise total(sum) salary from "EmployeeDetail" table. */
+select Department, SUM(Salary) as TotalSalary
+from EmployeeDetails
+group by Department;
+
+/*3.Write the query to get the department and department wise total(sum) salary, display it in descending order according to salary. */
+select Department, SUM(Salary) as TotalSalary
+from EmployeeDetails
+group by Department
+order by TotalSalary DESC;
+
+/*4.Write the query to get the department, total no. of departments, total(sum) salary with respect to department from "EmployeeDetail" table. */
+select Department, COUNT(distinct Department) as TotalDepartments, SUM(Salary) as TotalSalary
+from EmployeeDetails
+group by Department;
+
+/*5.Get department wise average salary from "EmployeeDetail" table order by salary ascending */
+select Department, AVG(Salary) as AverageSalary
+from EmployeeDetails
+group by Department
+order by AverageSalary ASC;
+
+/*6.Get department wise maximum salary from "EmployeeDetail" table order by salary ascending */
+select Department, MAX(Salary) as MaxSalary
+from EmployeeDetails
+group by Department
+order by MaxSalary ASC;
+
+/*7.Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for those employee which have assigned project already. */
+select E.FirstName as EmployeeName, P.ProjectName as ProjectName
+from EmployeeDetails E
+inner join ProjectDetail P on E.EmployeeId = P.EmployeeId
+order by E.FirstName;
+
+/*8.Get employee name, project name order by firstname from "EmployeeDetail" and "ProjectDetail" for all employee even they have not assigned project. */
+select E.FirstName as EmployeeName, P.ProjectName as ProjectName
+from EmployeeDetails E
+left join ProjectDetails P ON E.EmployeeId = P.EmployeeDetailId
+order by E.FirstName;
+
+/*9.Get all project name even they have not matching any employeeid, in left table, order by firstname from "EmployeeDetail" and "ProjectDetail". */
+select E.FirstName as EmployeeName, P.ProjectName as ProjectName
+from EmployeeDetails E
+right join ProjectDetails P on E.EmployeeId = P.EmployeeDetailId
+order by E.FirstName;
+
+/*10.Get complete record(employeename, project name) from both tables ([EmployeeDetail],[ProjectDetail]), if no match found in any table then show NULL.*/
+select E.FirstName as EmployeeName, P.ProjectName as ProjectName
+from EmployeeDetails E
+full outer join ProjectDetails P ON E.EmployeeId = P.EmployeeDetailId;
+
+/*11.Write down the query to fetch EmployeeName & Project who has assign more than one project. */
+select E.FirstName as EmployeeName, MAX(P.ProjectName) as Project
+from EmployeeDetails E
+join ProjectDetails P on E.EmployeeID = P.EmployeeDetailID
+group by E.FirstName;
+
